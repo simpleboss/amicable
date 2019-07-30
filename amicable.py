@@ -1,18 +1,23 @@
 input_number = int(input())
-result = []
+# input_number = 500
+saved_list = []
 
-for i in range(1, input_number + 1):
-    divisor1_sum = 0
-    for divisor in range(1, i):
-        if i % divisor == 0:
-            divisor1_sum += divisor
 
-    divisor2_sum = 0
-    for divisor in range(1, divisor1_sum):
-        if divisor1_sum % divisor == 0:
-            divisor2_sum += divisor
+def return_divisor_sum(nb):
+    result_sum = 1
+    i = 2
+    while i * i < nb:
+        if nb % i == 0:
+            result_sum += i + nb // i
+        i += 1
+    return result_sum
 
-    if i == divisor2_sum and i != divisor1_sum:
-        if not sorted([i, divisor1_sum]) in result:
-            result.append(sorted([i, divisor1_sum]))
-            print(result[-1][0], result[-1][1])
+
+for j in range(2, input_number + 1):
+    sum_of_j = return_divisor_sum(j)
+    sum_of_k = return_divisor_sum(sum_of_j)
+    if j == sum_of_k and j != sum_of_j:
+        result = sorted([j, sum_of_j])
+        if result not in saved_list:
+            saved_list.append(result)
+            print(result[0], result[1])
